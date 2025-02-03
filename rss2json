@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RSS2JSON Feed Endpoint</title>
+  <script>
+    // Function to fetch and output the RSS feed data
+    function fetchRSSData() {
+      // Replace with your preferred RSS feed URL, e.g., a TechCrunch AI feed
+      const rssFeedUrl = encodeURIComponent('https://techcrunch.com/tag/artificial-intelligence/feed/');
+      const rss2jsonEndpoint = `https://api.rss2json.com/v1/api.json?rss_url=${rssFeedUrl}`;
+
+      fetch(rss2jsonEndpoint)
+        .then(response => response.json())
+        .then(data => {
+          // Insert any additional filtering or processing here if needed.
+          // For example, you could filter items based on keywords:
+          // data.items = data.items.filter(item => item.title.toLowerCase().includes('ai'));
+
+          // Output the JSON data as a formatted string
+          document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById('output').textContent = 'Error fetching feed: ' + error;
+        });
+    }
+
+    // Automatically run the fetch function when the page loads
+    window.onload = fetchRSSData;
+  </script>
+</head>
+<body>
+  <!-- The Custom GPT webhook will access this page and retrieve the JSON output -->
+  <pre id="output">Loading RSS feed data...</pre>
+</body>
+</html>
